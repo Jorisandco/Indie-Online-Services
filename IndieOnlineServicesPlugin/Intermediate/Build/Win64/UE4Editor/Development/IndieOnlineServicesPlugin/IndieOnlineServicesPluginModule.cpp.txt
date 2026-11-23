@@ -1,0 +1,2 @@
+D:\projecten\The_great_code_examp\Plugins\IndieOnlineServicesPlugin\Intermediate\Build\Win64\UE4Editor\Development\IndieOnlineServicesPlugin\Definitions.IndieOnlineServicesPlugin.h
+D:\projecten\The_great_code_examp\Plugins\IndieOnlineServicesPlugin\Source\IndieOnlineServicesPlugin\Public\IndieOnlineServicesPluginModule.h

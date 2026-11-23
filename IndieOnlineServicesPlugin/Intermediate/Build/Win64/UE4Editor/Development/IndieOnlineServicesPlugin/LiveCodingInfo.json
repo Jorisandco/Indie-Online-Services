@@ -1,0 +1,13 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.IndieOnlineServicesPlugin.cpp.obj": [
+			"IndieOnlineServicesPluginModule.cpp.obj",
+			"IndieOnlineTestServiceRequest.cpp.obj"
+		],
+		"Module.IndieOnlineServicesPlugin.gen.cpp.obj": [
+			"IndieOnlineServicesPlugin.init.gen.cpp.obj",
+			"IndieOnlineTestServiceRequest.gen.cpp.obj"
+		]
+	}
+}

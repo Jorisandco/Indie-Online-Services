@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-IndieOnlineServicesPlugin.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\projecten\The_great_code_examp\Intermediate\Build\Win64\The_great_code_exampEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"D:\projecten\The_great_code_examp\Plugins\IndieOnlineServicesPlugin\Intermediate\Build\Win64\UE4Editor\Development\IndieOnlineServicesPlugin\Module.IndieOnlineServicesPlugin.cpp.obj"
+"D:\projecten\The_great_code_examp\Plugins\IndieOnlineServicesPlugin\Intermediate\Build\Win64\UE4Editor\Development\IndieOnlineServicesPlugin\Module.IndieOnlineServicesPlugin.gen.cpp.obj"
+"D:\projecten\The_great_code_examp\Plugins\IndieOnlineServicesPlugin\Intermediate\Build\Win64\UE4Editor\Development\IndieOnlineServicesPlugin\Default.rc2.res"
+/OUT:"D:\projecten\The_great_code_examp\Plugins\IndieOnlineServicesPlugin\Intermediate\Build\Win64\UE4Editor\Development\IndieOnlineServicesPlugin\UE4Editor-IndieOnlineServicesPlugin.lib"

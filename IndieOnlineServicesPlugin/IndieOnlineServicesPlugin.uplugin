@@ -1,0 +1,24 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.0.0",
+  "FriendlyName": "IndieOnlineServicesPlugin",
+  "Description": "This plugin allowes you to connect and make use of your own Indie online services Host.",
+  "Category": "MultiplayerServices",
+  "CreatedBy": "JorisandCo",
+  "CreatedByURL": "",
+  "DocsURL": "",
+  "MarketplaceURL": "",
+  "SupportURL": "",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "IsExperimentalVersion": false,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "IndieOnlineServicesPlugin",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}
