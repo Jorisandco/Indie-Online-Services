@@ -17,4 +17,10 @@ public:
 
 	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Connection")
 	FString BackendBaseUrl;
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "FriendsList")
+	bool GameIncludesFriendListFunctionality;
+
+	UPROPERTY(Config, EditAnywhere, BlueprintReadOnly, Category = "Sessions")
+	bool GameHasAPartySystemFunction;
 };
