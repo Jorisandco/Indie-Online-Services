@@ -16,6 +16,7 @@ public class IndieOnlineServicesPlugin : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(new string[]
         {
+            "OnlineSubsystem",
             "HTTP",
             "Json",
             "JsonUtilities"

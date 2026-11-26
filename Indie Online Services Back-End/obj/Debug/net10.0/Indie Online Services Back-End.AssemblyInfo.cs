@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Indie Online Services Back-End")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e95d1b82da1e979c542aa85a2a78d9d12f18863")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+503a0cf529081c8bb068e4d85503ac3115275318")]
 [assembly: System.Reflection.AssemblyProductAttribute("Indie Online Services Back-End")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Indie Online Services Back-End")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

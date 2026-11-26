@@ -1,5 +1,6 @@
-#include "IndieOnlineTestServiceRequest.h"
+#include "TestingHeaders/IndieOnlineTestServiceRequest.h"
 #include "IndieOnlineServicesPluginModule.h"
+
 #define LOCTEXT_NAMESPACE "UIndieOnlineTestServiceRequest"
 
 FString UIndieOnlineTestServiceRequest::FormatPlayerGreeting(const FString& PlayerName)
