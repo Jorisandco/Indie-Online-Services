@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
 #include "Structures/UserInfoStruct.h"
 #include "RequestClass/IndieOnlineServices_RequestClass.h"
 #include "Subsystems/GameInstanceSubsystem.h"
@@ -22,6 +21,9 @@ public:
 	FOnFriendsListReceived OnFriendsListReceived;
 private:
 	void HandleFriendsResponse(bool bSuccess, const FString& ResponseBody);
+
+	FUserInfoStruct ParseToUserData(const TSharedPtr<FJsonObject>& FriendObj);
+	TArray<FUserInfoStruct> ParseToUserDataArray(const TArray<TSharedPtr<FJsonValue>>& JsonArray);
 
 	UPROPERTY()
 	UIndieOnlineServices_RequestClass* RequestHelper;

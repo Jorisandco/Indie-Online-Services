@@ -2,6 +2,7 @@
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
+#include "Structures/UserInfoStruct.h"
 
 void UFriendSubsystem::GetFriends()
 {
@@ -11,19 +12,21 @@ void UFriendSubsystem::GetFriends()
 	}
 
 	FOnHttpRequestCompleted FriendsCallback;
+	FString Endpoint = "/api/FriendsList/test";
+
 	FriendsCallback.BindUObject(this, &UFriendSubsystem::HandleFriendsResponse);
 
-	RequestHelper->GETRequest(TEXT("/api/FriendsList/test"), FriendsCallback);
+	RequestHelper->GETRequest(Endpoint, FriendsCallback);
 }
 
 void UFriendSubsystem::HandleFriendsResponse(bool bSuccess, const FString& ResponseBody)
 {
-	TArray<FUserInfoStruct> ParsedFriends;
+	TArray<FUserInfoStruct> FriendsList;
 
 	if (!bSuccess)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("GetFriends HTTP request failed."));
-		OnFriendsListReceived.Broadcast(false, ParsedFriends);
+		OnFriendsListReceived.Broadcast(false, FriendsList);
 		return;
 	}
 
@@ -33,30 +36,51 @@ void UFriendSubsystem::HandleFriendsResponse(bool bSuccess, const FString& Respo
 	if (!FJsonSerializer::Deserialize(Reader, JsonArray))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Failed to parse friends JSON array: %s"), *ResponseBody);
-		OnFriendsListReceived.Broadcast(false, ParsedFriends);
+		OnFriendsListReceived.Broadcast(false, FriendsList);
 		return;
 	}
 
-	for (const TSharedPtr<FJsonValue>& Entry : JsonArray)
+	FriendsList = ParseToUserDataArray(JsonArray);
+
+	OnFriendsListReceived.Broadcast(true, FriendsList);
+}
+
+
+// Related Data Parser Functions: 
+FUserInfoStruct UFriendSubsystem::ParseToUserData(const TSharedPtr<FJsonObject>& FriendObj) {
+	FUserInfoStruct FriendInfo;
+
+	if (!FriendObj.IsValid())
 	{
-		if (!Entry.IsValid() || Entry->Type != EJson::Object)
-		{
-			continue;
-		}
-
-		TSharedPtr<FJsonObject> FriendObj = Entry->AsObject();
-		if (!FriendObj.IsValid())
-		{
-			continue;
-		}
-
-		FUserInfoStruct FriendInfo;
-		FriendObj->TryGetStringField(TEXT("userId"), FriendInfo.UserId);
-		FriendObj->TryGetStringField(TEXT("displayName"), FriendInfo.DisplayName);
-		FriendObj->TryGetBoolField(TEXT("isOnline"), FriendInfo.IsOnline);
-
-		ParsedFriends.Add(FriendInfo);
+		return FriendInfo;
 	}
 
-	OnFriendsListReceived.Broadcast(true, ParsedFriends);
+	FriendObj->TryGetStringField(TEXT("userId"), FriendInfo.UserId); // adds id to entry 
+	FriendObj->TryGetStringField(TEXT("displayName"), FriendInfo.DisplayName); // adds name to entry
+	FriendObj->TryGetBoolField(TEXT("isOnline"), FriendInfo.IsOnline); // adds online status to entry
+
+	return FriendInfo;
+}
+
+TArray<FUserInfoStruct> UFriendSubsystem::ParseToUserDataArray(const TArray<TSharedPtr<FJsonValue>>& JsonArray) {
+	TArray<FUserInfoStruct> ParsedFriends;
+
+	for (const TSharedPtr<FJsonValue>& Entry : JsonArray)
+	{
+		if (!Entry.IsValid() || Entry->Type != EJson::Object) // check if it is a json object
+		{
+			continue;
+		}
+
+		TSharedPtr<FJsonObject> FriendObj = Entry->AsObject(); // keeps a reference to recieved data
+		if (!FriendObj.IsValid()) // checks to see if pointer still points to valid memory adress 
+		{
+			continue;
+		}
+
+
+		ParsedFriends.Add(ParseToUserData(FriendObj)); // adds entry into array 
+	}
+
+	return ParsedFriends;
 }
