@@ -6,8 +6,9 @@
 void UIndieOnlineServices_RequestClass::GETRequest(const FString& RequestEndPoint, const FOnHttpRequestCompleted& OnComplete)
 {
 	const FString BaseUrl = GetDefault<UIndieOnlineServicesSettings>()->BackendBaseUrl; // get's base url from settings using settings class 
+	const FString FullUrl = BaseUrl + RequestEndPoint;
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest(); // sets up variable used to make request
-	HttpRequest->SetURL(BaseUrl + RequestEndPoint); // gives it the endpoint
+	HttpRequest->SetURL(FullUrl);
 	HttpRequest->SetVerb(TEXT("GET")); // declares request type
 
 	TWeakObjectPtr<UIndieOnlineServices_RequestClass> WeakThis(this);
@@ -28,8 +29,9 @@ void UIndieOnlineServices_RequestClass::GETRequest(const FString& RequestEndPoin
 void UIndieOnlineServices_RequestClass::POSTRequest(const FString& RequestEndPoint, const FString& JSONData, const FOnHttpRequestCompleted& OnComplete)
 {
 	const FString BaseUrl = GetDefault<UIndieOnlineServicesSettings>()->BackendBaseUrl;
-	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetURL(BaseUrl + RequestEndPoint);
+	const FString FullUrl = BaseUrl + RequestEndPoint;
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest(); // sets up variable used to make request
+	HttpRequest->SetURL(FullUrl);
 	HttpRequest->SetVerb(TEXT("POST"));
 	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	HttpRequest->SetContentAsString(JSONData);

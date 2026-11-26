@@ -12,7 +12,7 @@ struct FUserInfoStruct
 	UPROPERTY(BlueprintReadOnly, Category = "User profile")
 	FString UserId;
 	UPROPERTY(BlueprintReadOnly, Category = "User profile")
-	FText DisplayName;
+	FString DisplayName;
 
 	UPROPERTY(BlueprintReadOnly, Category = "User profile")
 	bool IsOnline = false;
