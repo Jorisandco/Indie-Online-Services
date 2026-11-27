@@ -1,27 +1,32 @@
 #include "Subsystems/FriendSubsystem.h"
+#include "Subsystems/IndieOnlineCoreSubsystem.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 #include "Structures/UserInfoStruct.h"
 
+// requests 
 void UFriendSubsystem::GetFriends()
 {
-	if (!RequestHelper)
+	FString UserId;
+	UIndieOnlineServices_RequestClass* Helper = GetRequestHelper();
+
+	if (!Helper || !TryGetActiveUserId(UserId))
 	{
-		RequestHelper = NewObject<UIndieOnlineServices_RequestClass>(this);
+		OnFriendsListReceived.Broadcast(false, TArray<FUserInfoStruct>());
+		return;
 	}
 
-	// remove when actual user registration is a thing ofcourse
-	FString tempuserID = "32fbf73e-c56c-4bf5-aec1-21283e55f8ec";
-
 	FOnHttpRequestCompleted FriendsCallback;
-	FString Endpoint = "/api/FriendsList/get-friends-list/" + tempuserID;
+	const FString Endpoint = FString::Printf(TEXT("/api/FriendsList/get-friends-list/%s"), *UserId);
 
 	FriendsCallback.BindUObject(this, &UFriendSubsystem::HandleFriendsResponse);
 
-	RequestHelper->GETRequest(Endpoint, FriendsCallback);
+	Helper->GETRequest(Endpoint, FriendsCallback);
 }
 
+
+// handlers 
 void UFriendSubsystem::HandleFriendsResponse(bool bSuccess, const FString& ResponseBody)
 {
 	TArray<FUserInfoStruct> FriendsList;
@@ -86,4 +91,53 @@ TArray<FUserInfoStruct> UFriendSubsystem::ParseToUserDataArray(const TArray<TSha
 	}
 
 	return ParsedFriends;
+}
+
+// private functions to get data from core subsystem 
+
+bool UFriendSubsystem::TryGetActiveUserId(FString& OutUserId) const
+{
+	OutUserId.Reset();
+
+	const UGameInstance* GameInstance = GetGameInstance();
+	const UIndieOnlineCoreSubsystem* CoreSubsystem = GameInstance
+		? GameInstance->GetSubsystem<UIndieOnlineCoreSubsystem>()
+		: nullptr;
+
+	if (!CoreSubsystem)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FriendSubsystem: CoreSubsystem is null."));
+		return false;
+	}
+
+	OutUserId = CoreSubsystem->GetCurrentUserId();
+	if (OutUserId.IsEmpty())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FriendSubsystem: CurrentUserId is empty."));
+		return false;
+	}
+
+	return true;
+}
+
+UIndieOnlineServices_RequestClass* UFriendSubsystem::GetRequestHelper() const
+{
+	UGameInstance* GameInstance = GetGameInstance();
+	UIndieOnlineCoreSubsystem* CoreSubsystem = GameInstance
+		? GameInstance->GetSubsystem<UIndieOnlineCoreSubsystem>()
+		: nullptr;
+
+	if (!CoreSubsystem)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FriendSubsystem: CoreSubsystem is null."));
+		return nullptr;
+	}
+
+	UIndieOnlineServices_RequestClass* Helper = CoreSubsystem->GetRequestHelper();
+	if (!Helper)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FriendSubsystem: RequestHelper is null."));
+	}
+
+	return Helper;
 }

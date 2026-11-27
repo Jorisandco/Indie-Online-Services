@@ -15,7 +15,7 @@ class UFriendSubsystem : public UGameInstanceSubsystem {
 public:
 	UFUNCTION(BlueprintCallable, Category = "IndieOnlineServices|Friends")
 	void GetFriends();
-
+	
 	// Blueprints bind to this event pin to receive FUserInfoStruct asynchronously
 	UPROPERTY(BlueprintAssignable, Category = "IndieOnlineServices|Friends")
 	FOnFriendsListReceived OnFriendsListReceived;
@@ -25,6 +25,6 @@ private:
 	FUserInfoStruct ParseToUserData(const TSharedPtr<FJsonObject>& FriendObj);
 	TArray<FUserInfoStruct> ParseToUserDataArray(const TArray<TSharedPtr<FJsonValue>>& JsonArray);
 
-	UPROPERTY()
-	UIndieOnlineServices_RequestClass* RequestHelper;
+	bool TryGetActiveUserId(FString& OutUserId) const;
+	UIndieOnlineServices_RequestClass* GetRequestHelper() const;
 };
