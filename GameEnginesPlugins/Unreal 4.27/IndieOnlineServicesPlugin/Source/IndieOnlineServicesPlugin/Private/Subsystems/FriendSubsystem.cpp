@@ -11,8 +11,11 @@ void UFriendSubsystem::GetFriends()
 		RequestHelper = NewObject<UIndieOnlineServices_RequestClass>(this);
 	}
 
+	// remove when actual user registration is a thing ofcourse
+	FString tempuserID = "32fbf73e-c56c-4bf5-aec1-21283e55f8ec";
+
 	FOnHttpRequestCompleted FriendsCallback;
-	FString Endpoint = "/api/FriendsList/test";
+	FString Endpoint = "/api/FriendsList/get-friends-list/" + tempuserID;
 
 	FriendsCallback.BindUObject(this, &UFriendSubsystem::HandleFriendsResponse);
 
