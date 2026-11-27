@@ -16,4 +16,10 @@
     <PackageReference Include="Npgsql" Version="11.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="config\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using Indie_Online_Services_Back_End.Models;
+﻿using Indie_Online_Services_Back_End.Classes.Database;
+using Indie_Online_Services_Back_End.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Indie_Online_Services_Back_End.Controllers;
@@ -8,16 +9,21 @@ namespace Indie_Online_Services_Back_End.Controllers;
 
 public class FriendsListController : ControllerBase
 {
-    [HttpGet("test")]
-    public ActionResult<IEnumerable<FriendsListItem>> GetTestFriendList()
+    [HttpGet("get-friends-list/{userid:guid}")]
+    public ActionResult<IEnumerable<FriendsListItem>> GetFriendsList(Guid userid)
     {
-        List<FriendsListItem> sampleFriends = new List<FriendsListItem>
-        {
-            new(Guid.Parse("11111111-1111-1111-1111-111111111111"), "JorisandCo", true),
-            new(Guid.Parse("22222222-2222-2222-2222-222222222222"), "Morgumeow", false),
-            new(Guid.Parse("33333333-3333-3333-3333-333333333333"), "RealUnrealGamer620", true)
-        };
+        if (userid == Guid.Empty) return BadRequest("user not logged in");
 
-        return Ok(sampleFriends);
+        FriendDatabaseCalls databaseCalls = new();
+        List<FriendsListItem>? friends = databaseCalls.GetFriendsList_db(userid);
+
+        if (friends is null) return StatusCode(StatusCodes.Status500InternalServerError, "Failed to retrieve friends list.");
+
+        foreach (FriendsListItem item in friends)
+        {
+            Console.WriteLine(item.DisplayName);
+        }
+
+        return Ok(friends);
     }
 }
