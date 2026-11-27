@@ -1,6 +1,7 @@
 ﻿{
-  "HOST": "localhost",
-  "PORT": "5432",
-  "PASSWORD": "",
-  "USERNAME": ""
+  "Host": "localhost",
+  "username": "",
+  "password": "",
+  "port": "5432",
+  "database": "indie-online-services"
 }
