@@ -2,6 +2,6 @@
   "Host": "localhost",
   "username": "",
   "password": "",
-  "port": "5432",
+  "port": 5432,
   "database": "indie-online-services"
 }
