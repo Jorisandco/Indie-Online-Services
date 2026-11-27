@@ -29,8 +29,6 @@ namespace Indie_Online_Services_Back_End.Classes.Database
         {
             string configPath = Path.Combine(AppContext.BaseDirectory, "config", "config.json");
 
-            Console.WriteLine(configPath);
-
             if (!File.Exists(configPath))
                 
                 throw new FileNotFoundException("Database config file not found.", configPath);
@@ -42,8 +40,6 @@ namespace Indie_Online_Services_Back_End.Classes.Database
             }
 
             ConnectionInfo = JsonSerializer.Deserialize<DatabaseConnectionInfo>(json);
-
-            Console.WriteLine($"Host: '{ConnectionInfo.Value.Host}', Port: {ConnectionInfo.Value.Port}");
 
             NpgsqlConnectionStringBuilder builder = new()
             {

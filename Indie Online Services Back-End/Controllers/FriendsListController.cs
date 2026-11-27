@@ -19,10 +19,7 @@ public class FriendsListController : ControllerBase
 
         if (friends is null) return StatusCode(StatusCodes.Status500InternalServerError, "Failed to retrieve friends list.");
 
-        foreach (FriendsListItem item in friends)
-        {
-            Console.WriteLine(item.DisplayName);
-        }
+        Console.WriteLine("FriendList send to User Successfully");
 
         return Ok(friends);
     }
