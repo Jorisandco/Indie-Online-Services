@@ -1,0 +1,48 @@
+{
+  // remove all the comments in the actual file this is just the example
+  "Version": 1,
+  "Games": {
+
+    "Game_ID_HERE": { // this can be whatever you want so long you keep this unique
+      "Enabled": true,
+      "Networking": {
+        "MaxPlayersPerSession": 10,
+        "AllowRelayFallback": true,
+        "MaxWebSocketMessageBytes": 4096
+      },
+      "Sessions": {
+        "SessionBrowserEnabled": false, // if this is false it will default not store session for browsing
+        "FriendSessionInvitesEnabled": false // allows for friend invites to session if friends are disabled this will default to false no matter what
+      },
+      "PartySystem": {
+        "Enabled": false,
+        "PartySystemLimit": 5
+      },
+      "Gamechat": {
+        "Enabled": false,
+        "ChannelsEnabled": false,
+        "AllowedChannels": [ "all" ]
+      },
+
+      // game modes are here for games that want to use them names and description will be callable objects that your game can call through the gamemodesubsystem
+      "Gamemodes": {
+        "Enabled": false,
+        "Modes": [
+          {
+            "Name": "gamemode1",
+            "Description": "nothing",
+            "Maps": [], // array of strings that hold the names of the maps (optional for if you want different maps) 
+            "GamemodePartyLimit": 3 // overrides default party limit only for this gamemode have it set to null for it to keep default limit
+          },
+          {
+            "Name": "gamemode1",
+            "Description": "nothing",
+            "Maps": [], // array of strings that hold the names of the maps (optional for if you want different maps) 
+            "GamemodePartyLimit": 3 // overrides default party limit only for this gamemode have it set to null for it to keep default limit
+          }
+        ]
+      }
+    }
+
+  }
+}
